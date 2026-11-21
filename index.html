@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TravelMateNE — North East India Tourism Explorer</title>
+    <meta name="description" content="Explore the eight states of North East India with curated destinations, an INR trip and budget architect, instant ILP/PAP permit verification, and the MateAI travel assistant." />
+    <meta property="og:title" content="TravelMateNE — North East India Tourism Explorer" />
+    <meta property="og:description" content="Discover the Unexplored Eight: curated North East India destinations, INR itinerary builder, and instant ILP/PAP permit checker." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('travelmate_theme');
+          if (saved === 'dark' || (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              mist: '#F8F6F0',
+              pine: {
+                DEFAULT: '#0F2C23',
+                deep: '#091511',
+                card: '#10221C',
+                soft: '#18362C',
+                muted: '#4A635A'
+              },
+              terracotta: {
+                DEFAULT: '#D96B27',
+                dark: '#B85216',
+                light: '#E67E3B'
+              }
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', 'Georgia', 'serif'],
+              sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif']
+            }
+          }
+        }
+      };
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="bg-mist text-pine dark:bg-pine-deep dark:text-[#F4F1EA] font-sans antialiased selection:bg-terracotta/20 selection:text-pine dark:selection:text-white overflow-x-hidden">
+    <header id="site-header" class="sticky top-0 z-40 header-glass border-b border-pine/10 dark:border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
+        <a href="#top" class="inline-flex items-center gap-2 font-serif text-xl sm:text-2xl font-bold tracking-tight text-pine dark:text-[#F4F1EA] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta rounded">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-terracotta dark:text-terracotta-light shrink-0">
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+            <path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19" />
+          </svg>
+          <span>TravelMate<span class="text-terracotta dark:text-terracotta-light">NE</span></span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-pine/80 dark:text-[#CBD5D0]" aria-label="Primary Navigation">
+          <a href="#explore" class="nav-link whitespace-nowrap shrink-0 hover:text-pine dark:hover:text-white transition-colors">Explore</a>
+          <a href="#architect" class="nav-link whitespace-nowrap shrink-0 hover:text-pine dark:hover:text-white transition-colors">Trip Architect</a>
+          <a href="#permits" class="nav-link whitespace-nowrap shrink-0 hover:text-pine dark:hover:text-white transition-colors">Permit Checker</a>
+          <button type="button" id="open-saved-nav" class="nav-link whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 hover:text-pine dark:hover:text-white transition-colors">
+            <span>Saved Trips</span>
+            <span id="saved-count-nav" class="tabular-nums text-terracotta-dark dark:text-terracotta-light font-semibold">(0)</span>
+          </button>
+        </nav>
+
+        <div class="flex items-center gap-2.5 shrink-0">
+          <button type="button" id="theme-toggle" aria-label="Toggle dark mode" class="w-10 h-10 inline-flex items-center justify-center rounded-lg border border-pine/15 dark:border-white/15 text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/10 transition-colors">
+            <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          </button>
+
+          <a href="#architect" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-pine text-mist dark:bg-terracotta-dark dark:text-white hover:bg-pine-soft dark:hover:bg-terracotta transition-colors whitespace-nowrap shrink-0">
+            Plan Trip
+          </a>
+
+          <button type="button" id="mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false" class="md:hidden w-10 h-10 inline-flex items-center justify-center rounded-lg border border-pine/15 dark:border-white/15 text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/10 transition-colors">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="hidden md:hidden border-t border-pine/10 dark:border-white/10 bg-mist dark:bg-pine-deep px-4 py-4">
+        <div class="flex flex-col gap-1">
+          <a href="#explore" class="mobile-nav-link px-3 py-2.5 rounded-lg text-sm font-medium text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/5">Explore Destinations</a>
+          <a href="#architect" class="mobile-nav-link px-3 py-2.5 rounded-lg text-sm font-medium text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/5">Trip &amp; Budget Architect</a>
+          <a href="#permits" class="mobile-nav-link px-3 py-2.5 rounded-lg text-sm font-medium text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/5">ILP / PAP Permit Checker</a>
+          <button type="button" id="open-saved-mobile" class="text-left px-3 py-2.5 rounded-lg text-sm font-medium text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/5 flex items-center justify-between">
+            <span>Saved Trips</span>
+            <span id="saved-count-mobile" class="tabular-nums text-terracotta-dark dark:text-terracotta-light font-semibold">0 saved</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="relative min-h-[620px] lg:min-h-[680px] flex flex-col items-center justify-center overflow-hidden bg-pine text-center">
+        <img
+          src="/src/assets/images/hero_northeast_mist_1795236882216.jpg"
+          alt="Misty pine valleys and snow-capped Eastern Himalayan peaks of North East India at sunrise"
+          referrerpolicy="no-referrer"
+          class="absolute inset-0 w-full h-full object-cover object-center"
+          onerror="this.style.display='none'"
+        />
+        <div class="absolute inset-0 hero-scrim pointer-events-none"></div>
+        <div class="absolute inset-x-0 bottom-0 h-44 sm:h-56 hero-bottom-fade pointer-events-none"></div>
+
+        <div class="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-24 sm:pb-20 flex flex-col items-center text-center">
+          <p class="text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#F29A5E] mb-4">
+            Arunachal · Assam · Manipur · Meghalaya · Mizoram · Nagaland · Sikkim · Tripura
+          </p>
+          <h1 class="font-serif text-4xl sm:text-6xl lg:text-[66px] font-bold text-white leading-[1.06] tracking-tight headline-balance drop-shadow-sm">
+            Discover the<br class="hidden sm:inline" />
+            <span class="text-[#EA7A34]">Unexplored Eight</span>
+          </h1>
+          <p class="mt-5 text-sm sm:text-base lg:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
+            An editorial field guide to India’s eastern frontier—mist-wrapped monasteries, living root bridges, floating lakes, honest INR itineraries, and verified entry permits.
+          </p>
+
+          <div class="mt-8 w-full max-w-2xl mx-auto">
+            <div class="relative">
+              <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5 text-pine/45 dark:text-[#A6B5AE] absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Search destinations, states, foods, or airports (e.g. Tawang, Rhino, Momos, Shillong)..."
+                aria-label="Search North East India destinations"
+                class="w-full h-12 sm:h-14 pl-12 pr-12 rounded-full bg-white/95 dark:bg-pine-card/95 backdrop-blur-md border border-white/60 dark:border-white/15 shadow-lg text-sm sm:text-base text-pine dark:text-[#F4F1EA] placeholder:text-pine/50 dark:placeholder:text-[#8E9F98] focus:outline-none focus:ring-2 focus:ring-terracotta"
+              />
+              <button type="button" id="clear-search-btn" aria-label="Clear search" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full items-center justify-center text-pine/60 dark:text-[#A6B5AE] hover:bg-pine/10 dark:hover:bg-white/10">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-2.5 max-w-3xl mx-auto" id="state-filter-bar" role="group" aria-label="Filter by state"></div>
+
+          <a href="#explore" class="mt-12 inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-pine/70 dark:text-[#CBD5D0]/85 hover:text-pine dark:hover:text-white transition-colors">
+            <span>Scroll to explore</span>
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="explore" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-16 sm:pt-20 sm:pb-24">
+        <div class="text-center max-w-3xl mx-auto">
+          <p class="text-xs font-semibold tracking-[0.2em] uppercase text-terracotta-dark dark:text-terracotta-light">01. Field Atlas</p>
+          <h2 class="mt-2.5 font-serif text-3xl sm:text-5xl font-bold text-pine dark:text-[#F4F1EA] headline-balance">
+            Iconic Destinations Across All Eight States
+          </h2>
+        </div>
+
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-2.5 max-w-4xl mx-auto" id="category-filter-bar" role="group" aria-label="Filter by category"></div>
+
+        <div class="mt-5 flex items-center justify-center gap-4 text-xs sm:text-sm text-pine/65 dark:text-[#A6B5AE]">
+          <span id="results-summary" class="tabular-nums">Showing 11 of 11 destinations</span>
+          <button type="button" id="reset-filters-inline" class="hidden text-terracotta-dark dark:text-terracotta-light font-medium hover:underline whitespace-nowrap">
+            Reset filters
+          </button>
+        </div>
+
+        <div id="destinations-grid" class="mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7"></div>
+
+        <div id="empty-state" class="hidden mt-10 py-16 px-6 text-center rounded-2xl bg-white dark:bg-pine-card border border-pine/10 dark:border-white/10">
+          <i data-lucide="compass" class="w-9 h-9 mx-auto text-pine/40 dark:text-[#A6B5AE]"></i>
+          <h3 class="mt-4 font-serif text-2xl font-semibold text-pine dark:text-[#F4F1EA]">No matching destinations</h3>
+          <p class="mt-2 text-sm text-pine/70 dark:text-[#A6B5AE] max-w-md mx-auto">
+            Try clearing a state or category filter, or search by landmark, cuisine, or nearest airport.
+          </p>
+          <button type="button" id="reset-filters-empty" class="mt-5 px-5 py-2.5 rounded-full bg-terracotta hover:bg-terracotta-dark text-white text-sm font-medium transition-colors">
+            Show All Destinations
+          </button>
+        </div>
+      </section>
+
+      <section id="architect" class="border-t border-pine/10 dark:border-white/10 bg-white/60 dark:bg-[#0C1B16]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+          <div class="max-w-2xl">
+            <p class="text-xs font-medium tracking-widest uppercase text-terracotta-dark dark:text-terracotta-light">02. Interactive Planner</p>
+            <h2 class="mt-1 font-serif text-3xl sm:text-4xl font-semibold text-pine dark:text-[#F4F1EA] headline-balance">
+              Trip &amp; Budget Architect
+            </h2>
+            <p class="mt-2.5 text-sm sm:text-base text-pine/75 dark:text-[#A6B5AE] leading-relaxed">
+              Combine states, set your pace and comfort tier, and generate a structured day-by-day route with a transparent Indian Rupee breakdown.
+            </p>
+          </div>
+
+          <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-5 bg-white dark:bg-pine-card rounded-xl border border-pine/10 dark:border-white/10 p-6 sm:p-7">
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <label class="text-sm font-semibold text-pine dark:text-[#F4F1EA]">Select States (1–4)</label>
+                <span id="selected-states-count" class="text-xs text-pine/65 dark:text-[#A6B5AE] tabular-nums">2 selected</span>
+              </div>
+
+              <div id="planner-state-selector" class="grid grid-cols-2 gap-2"></div>
+
+              <div class="mt-4 pt-4 border-t border-pine/10 dark:border-white/10">
+                <span class="block text-xs font-medium text-pine/60 dark:text-[#A6B5AE] mb-2">Quick Regional Circuits</span>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" data-circuit="Assam,Meghalaya" data-days="5" class="circuit-preset text-xs px-3 py-1.5 rounded-md border border-pine/15 dark:border-white/15 text-pine/85 dark:text-[#CBD5D0] hover:border-terracotta hover:text-terracotta-dark dark:hover:text-terracotta-light transition-colors whitespace-nowrap">
+                    Assam + Meghalaya (5d)
+                  </button>
+                  <button type="button" data-circuit="Arunachal Pradesh" data-days="6" class="circuit-preset text-xs px-3 py-1.5 rounded-md border border-pine/15 dark:border-white/15 text-pine/85 dark:text-[#CBD5D0] hover:border-terracotta hover:text-terracotta-dark dark:hover:text-terracotta-light transition-colors whitespace-nowrap">
+                    Tawang &amp; Ziro (6d)
+                  </button>
+                  <button type="button" data-circuit="Sikkim" data-days="4" class="circuit-preset text-xs px-3 py-1.5 rounded-md border border-pine/15 dark:border-white/15 text-pine/85 dark:text-[#CBD5D0] hover:border-terracotta hover:text-terracotta-dark dark:hover:text-terracotta-light transition-colors whitespace-nowrap">
+                    Sikkim Alpine (4d)
+                  </button>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-5 border-t border-pine/10 dark:border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <label for="duration-slider" class="text-sm font-semibold text-pine dark:text-[#F4F1EA]">Duration</label>
+                    <span id="duration-display" class="text-sm font-semibold text-terracotta-dark dark:text-terracotta-light tabular-nums">5 Days</span>
+                  </div>
+                  <input type="range" id="duration-slider" min="2" max="7" value="5" class="w-full accent-[#D96B27] cursor-pointer" />
+                  <div class="flex justify-between text-[11px] text-pine/55 dark:text-[#8E9F98] mt-1 tabular-nums">
+                    <span>2 days</span>
+                    <span>5 days</span>
+                    <span>7 days</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-semibold text-pine dark:text-[#F4F1EA] mb-2">Travelers</label>
+                  <div class="flex items-center justify-between h-10 px-2 rounded-lg border border-pine/15 dark:border-white/15 bg-mist/60 dark:bg-pine-deep">
+                    <button type="button" id="travelers-minus" aria-label="Decrease travelers" class="w-8 h-8 rounded-md inline-flex items-center justify-center text-pine dark:text-[#F4F1EA] hover:bg-pine/10 dark:hover:bg-white/10 transition-colors">
+                      <i data-lucide="minus" class="w-4 h-4"></i>
+                    </button>
+                    <span id="travelers-display" class="text-sm font-semibold tabular-nums text-pine dark:text-[#F4F1EA]">2 Travelers</span>
+                    <button type="button" id="travelers-plus" aria-label="Increase travelers" class="w-8 h-8 rounded-md inline-flex items-center justify-center text-pine dark:text-[#F4F1EA] hover:bg-pine/10 dark:hover:bg-white/10 transition-colors">
+                      <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-5 border-t border-pine/10 dark:border-white/10">
+                <label class="block text-sm font-semibold text-pine dark:text-[#F4F1EA] mb-2.5">Budget Tier</label>
+                <div class="grid grid-cols-3 gap-2 p-1 rounded-lg bg-mist dark:bg-pine-deep border border-pine/10 dark:border-white/10" role="radiogroup" aria-label="Budget Tier">
+                  <button type="button" data-tier="Backpacker" class="tier-btn py-2 px-2 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap">Backpacker</button>
+                  <button type="button" data-tier="Comfort" class="tier-btn py-2 px-2 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap">Comfort</button>
+                  <button type="button" data-tier="Boutique" class="tier-btn py-2 px-2 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap">Boutique</button>
+                </div>
+                <p id="tier-caption" class="mt-2 text-xs text-pine/65 dark:text-[#A6B5AE]">
+                  Verified boutique homestays, private sedan transfers, and curated regional dining.
+                </p>
+              </div>
+
+              <button type="button" id="generate-itinerary-btn" class="mt-6 w-full h-11 rounded-lg bg-pine hover:bg-pine-soft dark:bg-terracotta-dark dark:hover:bg-terracotta text-mist dark:text-white text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors">
+                <i data-lucide="route" class="w-4 h-4"></i>
+                <span>Generate Itinerary</span>
+              </button>
+            </div>
+
+            <div class="lg:col-span-7 bg-white dark:bg-pine-card rounded-xl border border-pine/10 dark:border-white/10 p-6 sm:p-7">
+              <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-5 border-b border-pine/10 dark:border-white/10">
+                <div>
+                  <p id="plan-meta" class="text-xs font-medium text-pine/65 dark:text-[#A6B5AE] tabular-nums">5 Days · 2 Travelers · Comfort Tier</p>
+                  <h3 id="plan-title" class="mt-1 font-serif text-2xl font-semibold text-pine dark:text-[#F4F1EA]">
+                    Assam &amp; Meghalaya Expedition
+                  </h3>
+                </div>
+                <button type="button" id="copy-plan-btn" class="px-4 py-2 rounded-lg border border-pine/20 dark:border-white/20 text-xs sm:text-sm font-medium text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/10 inline-flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0">
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                  <span>Copy Plan</span>
+                </button>
+              </div>
+
+              <div id="trip-highlights-card" class="mt-6 p-4 sm:p-5 rounded-xl bg-mist/75 dark:bg-pine-deep border border-pine/10 dark:border-white/10">
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-pine/10 dark:border-white/10">
+                  <div class="inline-flex items-center gap-2">
+                    <i data-lucide="compass" class="w-4 h-4 text-terracotta-dark dark:text-terracotta-light"></i>
+                    <h4 class="font-serif text-base sm:text-lg font-semibold text-pine dark:text-[#F4F1EA]">Trip Highlights</h4>
+                  </div>
+                  <span id="trip-highlights-meta" class="text-xs text-pine/65 dark:text-[#A6B5AE] tabular-nums"></span>
+                </div>
+                <ul id="trip-highlights-list" class="mt-3.5 grid grid-cols-1 sm:grid-cols-2 gap-3"></ul>
+              </div>
+
+              <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 pb-6 border-b border-pine/10 dark:border-white/10">
+                <div>
+                  <span class="text-xs text-pine/65 dark:text-[#A6B5AE]">Total Estimated Budget</span>
+                  <p id="budget-total" class="mt-1 font-serif text-2xl sm:text-3xl font-semibold text-pine dark:text-[#F4F1EA] tabular-nums">₹0</p>
+                </div>
+                <div>
+                  <span class="text-xs text-pine/65 dark:text-[#A6B5AE]">Per Traveler</span>
+                  <p id="budget-per-person" class="mt-1 font-serif text-xl sm:text-2xl font-semibold text-pine dark:text-[#F4F1EA] tabular-nums">₹0</p>
+                </div>
+                <div>
+                  <span class="text-xs text-pine/65 dark:text-[#A6B5AE]">Entry Gateway</span>
+                  <p id="plan-gateway" class="mt-1 text-sm font-semibold text-pine dark:text-[#F4F1EA]">Guwahati (GAU)</p>
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-4 pb-6 border-b border-pine/10 dark:border-white/10">
+                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-pine/60 dark:text-[#A6B5AE]">
+                  <span>INR Budget Breakdown</span>
+                  <span id="budget-permit-note" class="normal-case font-medium text-terracotta-dark dark:text-terracotta-light"></span>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between text-sm mb-1.5">
+                    <span class="font-medium text-pine dark:text-[#F4F1EA]">Stay &amp; Homestays</span>
+                    <span class="tabular-nums text-pine/80 dark:text-[#CBD5D0]"><strong id="cost-stay">₹0</strong> <span id="pct-stay" class="text-xs text-pine/55 dark:text-[#8E9F98]">(45%)</span></span>
+                  </div>
+                  <div class="h-2.5 rounded-full bg-pine/10 dark:bg-white/10 overflow-hidden">
+                    <div id="bar-stay" class="budget-bar h-full rounded-full bg-pine dark:bg-[#4FA686]" style="width: 45%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between text-sm mb-1.5">
+                    <span class="font-medium text-pine dark:text-[#F4F1EA]">Local Transport &amp; Transfers</span>
+                    <span class="tabular-nums text-pine/80 dark:text-[#CBD5D0]"><strong id="cost-transport">₹0</strong> <span id="pct-transport" class="text-xs text-pine/55 dark:text-[#8E9F98]">(33%)</span></span>
+                  </div>
+                  <div class="h-2.5 rounded-full bg-pine/10 dark:bg-white/10 overflow-hidden">
+                    <div id="bar-transport" class="budget-bar h-full rounded-full bg-terracotta" style="width: 33%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between text-sm mb-1.5">
+                    <span class="font-medium text-pine dark:text-[#F4F1EA]">Regional Dining, Entries &amp; Permits</span>
+                    <span class="tabular-nums text-pine/80 dark:text-[#CBD5D0]"><strong id="cost-food">₹0</strong> <span id="pct-food" class="text-xs text-pine/55 dark:text-[#8E9F98]">(22%)</span></span>
+                  </div>
+                  <div class="h-2.5 rounded-full bg-pine/10 dark:bg-white/10 overflow-hidden">
+                    <div id="bar-food" class="budget-bar h-full rounded-full bg-[#6A8E7F] dark:bg-[#8BB5A2]" style="width: 22%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <h4 class="text-xs font-semibold uppercase tracking-wider text-pine/60 dark:text-[#A6B5AE] mb-4">Day-by-Day Itinerary</h4>
+                <ol id="itinerary-days" class="space-y-4"></ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="permits" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div class="max-w-2xl">
+          <p class="text-xs font-medium tracking-widest uppercase text-terracotta-dark dark:text-terracotta-light">03. Entry Requirements</p>
+          <h2 class="mt-1 font-serif text-3xl sm:text-4xl font-semibold text-pine dark:text-[#F4F1EA] headline-balance">
+            Instant ILP / PAP Permit Checker
+          </h2>
+          <p class="mt-2.5 text-sm sm:text-base text-pine/75 dark:text-[#A6B5AE] leading-relaxed">
+            Verify Inner Line Permits (ILP), Protected Area Permits (PAP), and Sikkim Restricted Area rules before booking flights.
+          </p>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-5 bg-white dark:bg-pine-card rounded-xl border border-pine/10 dark:border-white/10 p-6 sm:p-7">
+            <label for="permit-state-select" class="block text-sm font-semibold text-pine dark:text-[#F4F1EA] mb-2">Select North East State</label>
+            <select id="permit-state-select" class="w-full h-11 px-3.5 rounded-lg bg-mist/80 dark:bg-pine-deep border border-pine/15 dark:border-white/15 text-sm font-medium text-pine dark:text-[#F4F1EA] focus:outline-none focus:border-terracotta">
+              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+              <option value="Assam">Assam</option>
+              <option value="Manipur">Manipur</option>
+              <option value="Meghalaya">Meghalaya</option>
+              <option value="Mizoram">Mizoram</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Sikkim">Sikkim</option>
+              <option value="Tripura">Tripura</option>
+            </select>
+
+            <div class="mt-5">
+              <span class="block text-sm font-semibold text-pine dark:text-[#F4F1EA] mb-2">Traveler Nationality</span>
+              <div class="grid grid-cols-2 gap-2 p-1 rounded-lg bg-mist dark:bg-pine-deep border border-pine/10 dark:border-white/10" role="radiogroup" aria-label="Traveler Type">
+                <button type="button" data-traveler="indian" class="traveler-type-btn py-2.5 px-3 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap">Indian Citizen</button>
+                <button type="button" data-traveler="foreign" class="traveler-type-btn py-2.5 px-3 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap">Foreign National</button>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-pine/10 dark:border-white/10">
+              <span class="block text-xs font-medium text-pine/60 dark:text-[#A6B5AE] mb-2.5">Quick State Switch</span>
+              <div id="permit-quick-states" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 bg-white dark:bg-pine-card rounded-xl border border-pine/10 dark:border-white/10 p-6 sm:p-7">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-pine/10 dark:border-white/10">
+              <div>
+                <p id="permit-context-line" class="text-xs font-medium text-pine/65 dark:text-[#A6B5AE]">Arunachal Pradesh · Indian Citizen</p>
+                <h3 id="permit-status-heading" class="mt-1 font-serif text-2xl font-semibold text-pine dark:text-[#F4F1EA]">ILP Required</h3>
+              </div>
+              <div id="permit-status-indicator" class="inline-flex items-center gap-2 text-sm font-semibold"></div>
+            </div>
+
+            <dl class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 pb-6 border-b border-pine/10 dark:border-white/10">
+              <div>
+                <dt class="text-xs text-pine/60 dark:text-[#A6B5AE]">Processing Time</dt>
+                <dd id="permit-processing" class="mt-1 text-sm font-semibold text-pine dark:text-[#F4F1EA] tabular-nums"></dd>
+              </div>
+              <div>
+                <dt class="text-xs text-pine/60 dark:text-[#A6B5AE]">Estimated Fee</dt>
+                <dd id="permit-fee" class="mt-1 text-sm font-semibold text-pine dark:text-[#F4F1EA] tabular-nums"></dd>
+              </div>
+              <div>
+                <dt class="text-xs text-pine/60 dark:text-[#A6B5AE]">Issuing Channel</dt>
+                <dd id="permit-channel" class="mt-1 text-sm font-semibold text-pine dark:text-[#F4F1EA]"></dd>
+              </div>
+            </dl>
+
+            <p id="permit-advisory" class="mt-5 text-sm text-pine/80 dark:text-[#CBD5D0] leading-relaxed"></p>
+
+            <div class="mt-6 pt-5 border-t border-pine/10 dark:border-white/10">
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="text-sm font-semibold text-pine dark:text-[#F4F1EA]">Document Readiness Checklist</h4>
+                <span id="checklist-progress" class="text-xs font-medium text-terracotta-dark dark:text-terracotta-light tabular-nums">0 of 3 checked</span>
+              </div>
+              <div id="permit-checklist" class="space-y-2.5"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-pine/10 dark:border-white/10 bg-white dark:bg-[#08120E]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <a href="#top" class="font-serif text-xl font-semibold text-pine dark:text-[#F4F1EA]">TravelMateNE</a>
+          <p class="mt-1 text-sm text-pine/65 dark:text-[#A6B5AE]">Curated routes, permit guidance, and INR planning for North East India.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-6 text-sm text-pine/75 dark:text-[#CBD5D0]">
+          <a href="#explore" class="hover:text-pine dark:hover:text-white transition-colors">Explore</a>
+          <a href="#architect" class="hover:text-pine dark:hover:text-white transition-colors">Trip Architect</a>
+          <a href="#permits" class="hover:text-pine dark:hover:text-white transition-colors">Permit Checker</a>
+          <span class="text-pine/30 dark:text-white/20" aria-hidden="true">|</span>
+          <span class="font-medium text-pine dark:text-[#F4F1EA]">Built by Riyan Das</span>
+        </div>
+      </div>
+    </footer>
+
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
+      <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-pine-card rounded-xl border border-pine/15 dark:border-white/15 shadow-2xl">
+        <div class="relative h-60 sm:h-72 bg-pine overflow-hidden">
+          <img id="detail-img" src="" alt="" referrerpolicy="no-referrer" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
+          <div class="absolute top-4 right-4 flex items-center gap-2">
+            <button type="button" id="detail-fav-btn" aria-label="Toggle favorite" class="w-10 h-10 rounded-lg bg-black/50 hover:bg-black/70 text-white inline-flex items-center justify-center backdrop-blur-sm transition-colors">
+              <i data-lucide="heart" class="w-4 h-4"></i>
+            </button>
+            <button type="button" id="close-detail-modal" aria-label="Close destination details" class="w-10 h-10 rounded-lg bg-black/50 hover:bg-black/70 text-white inline-flex items-center justify-center backdrop-blur-sm transition-colors">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+          <div class="absolute bottom-4 left-5 right-5 text-white">
+            <p id="detail-kicker" class="text-xs font-medium text-white/85"></p>
+            <h3 id="detail-modal-title" class="mt-1 font-serif text-2xl sm:text-3xl font-semibold"></h3>
+          </div>
+        </div>
+
+        <div class="p-6 sm:p-7">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-pine/10 dark:border-white/10">
+            <div id="detail-permit-line" class="inline-flex items-center gap-2 text-sm font-semibold"></div>
+            <div class="text-sm text-pine/75 dark:text-[#CBD5D0] tabular-nums">
+              Est. <strong id="detail-budget" class="text-pine dark:text-white"></strong> / day · <span id="detail-days"></span>
+            </div>
+          </div>
+
+          <div id="detail-weather-box" class="mt-4 px-3.5 py-2.5 rounded-lg bg-mist/75 dark:bg-pine-deep border border-pine/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
+            <div class="inline-flex items-center gap-2 text-pine dark:text-[#F4F1EA]">
+              <span id="detail-weather-icon-wrap" class="inline-flex items-center justify-center shrink-0">
+                <i data-lucide="cloud-sun" class="w-4 h-4 text-terracotta-dark dark:text-terracotta-light"></i>
+              </span>
+              <span id="detail-weather-text" class="font-medium tabular-nums">Checking live weather...</span>
+            </div>
+            <span id="detail-coords" class="text-[11px] text-pine/55 dark:text-[#8E9F98] tabular-nums"></span>
+          </div>
+
+          <p id="detail-summary" class="mt-4 text-sm sm:text-base text-pine/80 dark:text-[#CBD5D0] leading-relaxed"></p>
+
+          <div class="mt-6">
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-pine/60 dark:text-[#A6B5AE]">Key Highlights</h4>
+            <ul id="detail-highlights" class="mt-2.5 space-y-2 text-sm text-pine dark:text-[#F4F1EA]"></ul>
+          </div>
+
+          <dl class="mt-6 pt-5 border-t border-pine/10 dark:border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <dt class="text-xs text-pine/60 dark:text-[#A6B5AE]">Signature Local Food</dt>
+              <dd id="detail-food" class="mt-1 text-sm font-medium text-pine dark:text-[#F4F1EA]"></dd>
+            </div>
+            <div>
+              <dt class="text-xs text-pine/60 dark:text-[#A6B5AE]">Nearest Airport</dt>
+              <dd id="detail-airport" class="mt-1 text-sm font-medium text-pine dark:text-[#F4F1EA]"></dd>
+            </div>
+          </dl>
+
+          <div class="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3">
+            <button type="button" id="detail-check-permit-btn" class="h-11 px-4 rounded-lg border border-pine/20 dark:border-white/20 text-sm font-medium text-pine dark:text-[#F4F1EA] hover:bg-pine/5 dark:hover:bg-white/10 transition-colors whitespace-nowrap">
+              Check State Permit
+            </button>
+            <button type="button" id="detail-add-planner-btn" class="h-11 px-5 rounded-lg bg-terracotta-dark hover:bg-terracotta text-white text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors whitespace-nowrap">
+              <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+              <span>Add to Planner</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="saved-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="saved-modal-title">
+      <div class="relative w-full max-w-lg max-h-[85vh] flex flex-col bg-white dark:bg-pine-card rounded-xl border border-pine/15 dark:border-white/15 shadow-2xl overflow-hidden">
+        <div class="px-6 py-5 border-b border-pine/10 dark:border-white/10 flex items-center justify-between">
+          <div>
+            <h3 id="saved-modal-title" class="font-serif text-2xl font-semibold text-pine dark:text-[#F4F1EA]">Saved Trips</h3>
+            <p id="saved-modal-subtitle" class="text-xs text-pine/65 dark:text-[#A6B5AE] mt-0.5 tabular-nums">0 destinations bookmarked</p>
+          </div>
+          <button type="button" id="close-saved-modal" aria-label="Close saved trips" class="w-9 h-9 rounded-lg inline-flex items-center justify-center text-pine/70 dark:text-[#A6B5AE] hover:bg-pine/10 dark:hover:bg-white/10 transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div id="saved-modal-list" class="p-6 overflow-y-auto space-y-3 flex-1"></div>
+
+        <div id="saved-modal-footer" class="hidden px-6 py-4 border-t border-pine/10 dark:border-white/10 bg-mist/70 dark:bg-pine-deep items-center justify-between gap-3">
+          <div class="text-xs text-pine/75 dark:text-[#CBD5D0] tabular-nums">
+            <span class="block text-pine/55 dark:text-[#8E9F98]">Combined Estimate</span>
+            <strong id="saved-total-estimate" class="text-sm text-pine dark:text-white">₹0</strong>
+          </div>
+          <button type="button" id="load-saved-into-planner" class="h-10 px-4 rounded-lg bg-pine hover:bg-pine-soft dark:bg-terracotta-dark dark:hover:bg-terracotta text-mist dark:text-white text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap">
+            Plan Saved States
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixed bottom-5 right-5 z-40 flex flex-col items-end">
+      <div id="mateai-panel" class="hidden mb-3 w-[calc(100vw-2.5rem)] sm:w-[370px] max-h-[520px] flex-col rounded-xl bg-white dark:bg-pine-card border border-pine/15 dark:border-white/15 shadow-2xl overflow-hidden" role="dialog" aria-label="MateAI Travel Assistant">
+        <div class="px-4 py-3.5 bg-pine text-mist dark:bg-[#08120E] border-b border-white/10 flex items-center justify-between">
+          <div>
+            <h3 class="font-serif text-base font-semibold tracking-tight">MateAI Assistant</h3>
+            <p class="text-[11px] text-mist/75">North East India route, permit &amp; food desk</p>
+          </div>
+          <div class="flex items-center gap-1">
+            <button type="button" id="mateai-clear" aria-label="Clear chat" title="Reset conversation" class="w-8 h-8 rounded-md inline-flex items-center justify-center text-mist/80 hover:bg-white/10 transition-colors">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            </button>
+            <button type="button" id="mateai-close" aria-label="Close MateAI" class="w-8 h-8 rounded-md inline-flex items-center justify-center text-mist/80 hover:bg-white/10 transition-colors">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="mateai-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-mist/60 dark:bg-pine-deep text-sm"></div>
+
+        <div class="px-3.5 pt-2.5 pb-2 border-t border-pine/10 dark:border-white/10 bg-white dark:bg-pine-card">
+          <div id="mateai-chips" class="flex flex-wrap gap-1.5 mb-2.5">
+            <button type="button" class="mateai-chip text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-pine/15 dark:border-white/15 text-pine dark:text-[#E2EAE6] hover:border-terracotta hover:text-terracotta-dark dark:hover:text-terracotta-light transition-colors text-left">Best 5-day Meghalaya route?</button>
+            <button type="button" class="mateai-chip text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-pine/15 dark:border-white/15 text-pine dark:text-[#E2EAE6] hover:border-terracotta hover:text-terracotta-dark dark:hover:text-terracotta-light transition-colors text-left">ILP rules for Tawang?</button>
+            <button type="button" class="mateai-chip text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-pine/15 dark:border-white/15 text-pine dark:text-[#E2EAE6] hover:border-terracotta hover:text-terracotta-dark dark:hover:text-terracotta-light transition-colors text-left">Best time for Kaziranga?</button>
+            <button type="button" class="mateai-chip text-[11px] font-medium px-2.5 py-1.5 rounded-md border border-pine/15 dark:border-white/15 text-pine dark:text-[#E2EAE6] hover:border-terracotta hover:text-terracotta-dark dark:hover:text-terracotta-light transition-colors text-left">Must-try NE food?</button>
+          </div>
+
+          <form id="mateai-form" class="flex items-center gap-2 pb-1">
+            <input
+              type="text"
+              id="mateai-input"
+              placeholder="Ask about routes, permits, airports, food..."
+              aria-label="Ask MateAI a question"
+              class="flex-1 h-10 px-3 rounded-lg bg-mist/80 dark:bg-pine-deep border border-pine/15 dark:border-white/15 text-xs sm:text-sm text-pine dark:text-[#F4F1EA] placeholder:text-pine/50 dark:placeholder:text-[#8E9F98] focus:outline-none focus:border-terracotta"
+            />
+            <button type="submit" aria-label="Send message" class="w-10 h-10 rounded-lg bg-terracotta-dark hover:bg-terracotta text-white inline-flex items-center justify-center transition-colors shrink-0">
+              <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <button type="button" id="mateai-toggle" aria-expanded="false" aria-controls="mateai-panel" class="h-12 px-4 rounded-full bg-pine hover:bg-pine-soft dark:bg-terracotta-dark dark:hover:bg-terracotta text-mist dark:text-white shadow-lg border border-white/15 inline-flex items-center gap-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]">
+        <i data-lucide="message-square-text" class="w-4 h-4"></i>
+        <span>MateAI</span>
+      </button>
+    </div>
+
+    <div id="toast-container" aria-live="polite" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-2"></div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
