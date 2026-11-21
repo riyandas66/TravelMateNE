@@ -452,7 +452,7 @@
     <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
       <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-pine-card rounded-xl border border-pine/15 dark:border-white/15 shadow-2xl">
         <div class="relative h-60 sm:h-72 bg-pine overflow-hidden">
-          <img id="detail-img" src="" alt="" referrerpolicy="no-referrer" class="w-full h-full object-cover" />
+          <img id="detail-img" src="" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
           <div class="absolute top-4 right-4 flex items-center gap-2">
             <button type="button" id="detail-fav-btn" aria-label="Toggle favorite" class="w-10 h-10 rounded-lg bg-black/50 hover:bg-black/70 text-white inline-flex items-center justify-center backdrop-blur-sm transition-colors">
@@ -593,6 +593,6 @@
 
     <div id="toast-container" aria-live="polite" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-2"></div>
 
-    <script type="module" src="/app.js"></script>
+    <script type="module" src="/js/main.js"></script>
   </body>
 </html>
