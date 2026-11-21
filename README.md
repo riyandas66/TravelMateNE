@@ -1,15 +1,12 @@
 # TravelMateNE
 
-A web application designed to help travelers explore and plan trips across Northeast India. [Edit this 1–2 sentence summary if your app does something more specific.]
-
-## Live Demo
-[Add your Vercel/Netlify link here, or delete this section if not deployed yet]
+A modern travel companion web application designed to help travelers discover destinations, plan itineraries, and explore the rich culture and landscapes of Northeast India.
 
 ## Features
-- **[Feature 1]:** [Brief description, e.g., Interactive destination guides for Northeast India]
-- **[Feature 2]:** [Brief description, e.g., Custom itinerary builder]
-- **[Feature 3]:** [Brief description, e.g., Local recommendations and travel tips]
-- **Responsive Design:** Works smoothly across desktop and mobile devices.
+- **Destination Discovery:** Explore curated travel spots, hidden gems, and scenic locations across the Northeast Indian states.
+- **Trip & Itinerary Planning:** Organize travel routes, daily schedules, and must-visit highlights in one place.
+- **Local Travel Insights:** Access practical tips, cultural highlights, and essential travel guidance for navigating the region.
+- **Fast & Responsive UI:** Built with Vite for quick load times and a seamless experience across desktop and mobile devices.
 
 ## Tech Stack
 - **Build Tool:** Vite
@@ -21,5 +18,5 @@ Follow these steps to run the project locally:
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/](https://github.com/)<your-username>/TravelMateNE.git
+git clone [https://github.com/riyandas66/TravelMateNE.git](https://github.com/riyandas66/TravelMateNE.git)
 cd TravelMateNE
